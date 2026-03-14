@@ -12,11 +12,11 @@ const App = () => {
 
   const [startIndex, setStartIndex] = useState(0);
 
-  function handleScroll() {
+  const handleScroll = () => {
     const scrollTop = containerRef.current.scrollTop;
-    const newIndex = Math.floor(scrollTop / itemHeight);
-    setStartIndex(newIndex);
-  }
+    const newStart = Math.floor(scrollTop / itemHeight);
+    setStartIndex(newStart);
+  };
 
   const visibleItems = items.slice(startIndex, startIndex + visibleCount);
 
@@ -27,20 +27,15 @@ const App = () => {
       <div
         ref={containerRef}
         onScroll={handleScroll}
-        style={{
-          height: "500px",
-          overflowY: "auto"
-        }}
+        style={{ height: "500px", overflow: "auto" }}
       >
         {visibleItems.map((item, index) => (
-          <div
+          <h2
             key={startIndex + index}
-            style={{
-              height: "50px"
-            }}
+            style={{ height: `${itemHeight}px`, margin: 0 }}
           >
             {item}
-          </div>
+          </h2>
         ))}
       </div>
 
