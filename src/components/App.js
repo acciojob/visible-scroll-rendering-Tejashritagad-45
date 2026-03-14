@@ -1,46 +1,51 @@
-
-import React from "react";
-import { useState,useRef } from 'react';
+import React, { useRef, useState } from "react";
 import './../styles/App.css';
 
-
 const App = () => {
- const containerRef=useRef(null);
-    const items=Array.from({length:1000},(_,i)=>`item${i+1}`);
 
-    const itemHeight=50;
-    const visibleCount=10;
+  const containerRef = useRef(null);
 
-    const[startIndex,setStartIndex]=useState(0);
+  const itemHeight = 50;
+  const visibleCount = 10;
 
-    const hndleScroll=()=>{
-        const scrollTop=containerRef.current.scrollTop;
-        const newStartIndex=Math.floor(scrollTop/itemHeight);
-        setStartIndex(newStartIndex);
+  const items = Array.from({ length: 1000 }, (_, i) => `Item ${i + 1}`);
 
-    };
+  const [startIndex, setStartIndex] = useState(0);
 
-    const visibleItems=items.slice(startIndex,startIndex+visibleCount);
-  
+  function handleScroll() {
+    const scrollTop = containerRef.current.scrollTop;
+    const newIndex = Math.floor(scrollTop / itemHeight);
+    setStartIndex(newIndex);
+  }
+
+  const visibleItems = items.slice(startIndex, startIndex + visibleCount);
+
   return (
     <div>
-     ref={containerRef}
+      {/* Do not remove the main div */}
+
+      <div
+        ref={containerRef}
         onScroll={handleScroll}
         style={{
-            height:"500px",
-            overflowY:"auto",
-            border:"1px solid black"
+          height: "500px",
+          overflowY: "auto"
         }}
-        >
-            {visibleItems.map((item,index)=>(
-                <div key={index} style={{height:"50px"}}>
-                    {item}
-                </div>
-            ))}
+      >
+        {visibleItems.map((item, index) => (
+          <div
+            key={startIndex + index}
+            style={{
+              height: "50px"
+            }}
+          >
+            {item}
+          </div>
+        ))}
+      </div>
 
-        {/* Do not remove the main div */}
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
